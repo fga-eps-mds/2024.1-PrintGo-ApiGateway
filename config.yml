@@ -1,0 +1,3 @@
+services:
+  - name: user
+    url: http://localhost:8000 
