@@ -6,8 +6,8 @@ import httProxy from 'express-http-proxy'
 import { resolve } from 'path'
 import { readFileSync } from 'fs'
 import { load } from 'js-yaml'
-const app = express();
 
+const app = express();
 const pathFile = resolve(process.cwd(), 'config.yml')
 const  readConfig = readFileSync(pathFile, {encoding: 'utf8'})
 const { services } = load(readConfig, {json: true})
