@@ -148,3 +148,4 @@ yarn.lock
 reports/*
 
 config.yml
+.vercel
