@@ -1,4 +1,3 @@
-// Importing necessary modules
 import request from 'supertest';
 import { app, gateway } from '../src/gateway';
 
@@ -12,10 +11,3 @@ describe('GET /', () => {
     expect(response.body.message).toBe('Running Gateway');
   });
 });
-
-// describe('Proxy routes', () => {
-//   it('should proxy requests to Service 1', async () => {
-//     const response = await request(app).get('/service1'); 
-//   });
-
-// });
