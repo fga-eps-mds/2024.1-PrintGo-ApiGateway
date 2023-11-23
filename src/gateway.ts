@@ -6,13 +6,22 @@ import httProxy from 'express-http-proxy'
 import { resolve } from 'path'
 import { readFileSync } from 'fs'
 import { load } from 'js-yaml'
+import 'dotenv/config'
 
 const app = express();
 const pathFile = resolve(process.cwd(), 'config.yml')
 const  readConfig = readFileSync(pathFile, {encoding: 'utf8'})
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const {services}: any= load(readConfig, {json: true})
+type Service = {
+    name: string;
+    url: string;
+}
+
+type ServicesConfig = {
+    services: Service[];
+}
+
+const servicesConfig  = load(readConfig, {json: true}) as ServicesConfig
 
 app.use(express.json());
 
@@ -25,11 +34,8 @@ app.get('/', (req, res)  => {
     return res.json({ message: 'Running Gateway' })
 })
 
-services.forEach(({ url }) => {
-    console.log(url);
-    
-    app.use("/", httProxy(url, {timeout: 5000}))
- 
+servicesConfig.services.forEach(({ name, url }) => {    
+    app.use(`/${name}`, httProxy(url, {timeout: 5000}))
 });
 
 const PORT = process.env.PORT || 4000;
