@@ -1,0 +1,7 @@
+services:
+  - name: user
+    url: https://2023-2-print-go-user-service.vercel.app
+  - name: printer
+    url: http://localhost:8001
+  - name: schedular
+    url: https://2023-1-schedula-gerenciador-de-localidades.vercel.app
