@@ -1,6 +1,8 @@
 {
     "watch": ["./src", "."],  
-    "ext": "js,yml",           
-    "ignore": ["node_modules"],
-    "exec": "node src/gateway.js"
+    "ext": ".ts,.js,.yml",           
+    "ignore": [],
+    "exec": "ts-node ./src/gateway.ts",
+    "legacyWatch": true
+
   }

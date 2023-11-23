@@ -6,6 +6,8 @@
 
 ## Quality Control
 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fga-eps-mds_2023.2-PrintGo-PrinterService&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=fga-eps-mds_2023.2-PrintGo-PrinterService)
+
 
 
 ## Sobre

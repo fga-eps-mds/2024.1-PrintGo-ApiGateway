@@ -1,0 +1,7 @@
+services:
+  - name: user
+    url: http://localhost:8000
+  - name: printer
+    url: http://localhost:8001
+  - name: schedular
+    url: 2023-1-schedula-gerenciador-de-localidades.vercel.app

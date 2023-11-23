@@ -1,5 +1,5 @@
 services:
   - name: user
-    url: ${USER_SERVICE_URL}
+    url: http://localhost:8000
   - name: printer
-    url: ${PRINTER_SERVICE_URL}
+    url: http://localhost:8001
