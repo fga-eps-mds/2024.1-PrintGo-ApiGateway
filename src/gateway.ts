@@ -9,7 +9,8 @@ import { load } from 'js-yaml'
 import 'dotenv/config'
 
 const app = express();
-const pathFile = resolve(process.cwd(), 'config.yml')
+
+const pathFile = resolve(process.cwd(), process.env.CONFIG_FILE || 'config.yml')
 const  readConfig = readFileSync(pathFile, {encoding: 'utf8'})
 
 type Service = {

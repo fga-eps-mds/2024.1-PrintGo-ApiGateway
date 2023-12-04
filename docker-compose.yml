@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+  api-gateway:
+    container_name: printgo-api-gateway
+    restart: on-failure
+    build: .
+    volumes:
+      - .:/src
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    networks:
+      - printgo_network
+
+networks:
+  printgo_network:
+    external: true
