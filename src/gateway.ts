@@ -35,7 +35,7 @@ app.get('/', (req, res)  => {
 })
 
 servicesConfig.services.forEach(({ name, url }) => {    
-    app.use(`/${name}`, httProxy(url, {timeout: 5000}))
+    app.use(`/${name}`, httProxy(url, {timeout: 10000}))
 });
 
 const PORT = process.env.PORT || 4000;
