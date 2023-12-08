@@ -23,6 +23,25 @@ Aplicação disponível em: [link da aplicação](?)
 - Docker-compose
 
 
+### Instalação
+
+- **Execução local necessário servicos do user service e printer service devem ser executados previamente**
+
+```bash
+# 1. Clone o projeto
+git clone https://github.com/fga-eps-mds/2023.2-PrintGo-ApiGateway.git
+
+# 2. Entre na pasta do projeto
+cd 2023.2-PrintGo-ApiGateway
+
+docker-compose up --build
+    # --build somente eh necessario na primeira vez que estiver rodando
+    # depois `docker-compose up` ja resolve
+    # em linux talvez seja necessario a execucao em modo root `sudo docker-compose up`
+    # voce pode também caso queria adicionar um -d ao final para liberar o o terminal `docker-compose up -d`
+    # Para finalizar o servico execute no root do projeto `docker-compose down`
+```
+
 ## Contribuir
 
 Para contribuir com esse projeto é importante seguir nosso [Guia de Contribuição](https://fga-eps-mds.github.io/2023.2-PrintGo-Doc/guia_de_contribuicao/) do repositório e seguir nosso [Código de Conduta](https://fga-eps-mds.github.io/2023.2-PrintGo-Doc/codigo_conduta/).
