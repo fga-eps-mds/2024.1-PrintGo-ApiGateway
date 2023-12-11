@@ -1,7 +1,7 @@
 services:
   - name: user
-    url: http://printgo-user-service
+    url: https://2023-2-print-go-user-service-seven.vercel.app
   - name: printer
-    url: http://printgo-printer-service
+    url: https://2023-2-print-go-printer-service.vercel.app
   - name: schedular
     url: 2023-1-schedula-gerenciador-de-localidades.vercel.app
