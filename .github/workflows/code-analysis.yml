@@ -25,6 +25,10 @@ jobs:
 
       - name: Executa testes e gera cobertura
         run: yarn test:all
+        env:
+          URL_USER_SERVICE: ${{ secrets.URL_USER_SERVICE }}
+          URL_PRNTER_SERVICE: ${{ secrets.URL_PRINTER_SERVICE }}
+          URL_SCHEDULER_SERVICE: ${{ secrets.URL_SCHEDULER_SERVICE }}
 
       - name: Executa SonarCloud Scan
         if: ${{ always() }}
