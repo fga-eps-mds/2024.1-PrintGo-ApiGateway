@@ -8,6 +8,7 @@ describe('GET /', () => {
     });
 
   it('should return a 200 status and the correct message', async () => {
+    console.log(process.env.URL_SCHEDULAR_SERVICE);
     
     const response = await request(app).get('/');
     expect(response.status).toBe(200);
