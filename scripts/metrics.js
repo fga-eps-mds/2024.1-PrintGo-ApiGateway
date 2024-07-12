@@ -1,6 +1,6 @@
-const REPO = '2023.2-PrintGo-ApiGateway';
+const REPO = '2024.1-PrintGo-ApiGateway';
 const OWNER = 'fga-eps-mds';
-const SONAR_ID = 'fga-eps-mds_2023.2-PrintGo-ApiGateway';
+const SONAR_ID = 'fga-eps-mds_2024.1-PrintGo-ApiGateway';
 
 const METRIC_LIST = [
     'files',
