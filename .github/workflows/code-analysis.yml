@@ -29,7 +29,8 @@ jobs:
         run: yarn test:all
         env:
           URL_USER_SERVICE: ${{secrets.URL_USER_SERVICE}}
-          URL_PRNTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
+          URL_PRINTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
+          URL_CONTRACT_SERVICE: ${{secrets.URL_CONTRACT_SERVICE}}
           URL_SCHEDULER_SERVICE: ${{secrets.URL_SCHEDULER_SERVICE}}
 
       - name: Executa SonarCloud Scan
@@ -39,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
           URL_USER_SERVICE: ${{secrets.URL_USER_SERVICE}}
-          URL_PRNTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
+          URL_PRINTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
           URL_SCHEDULER_SERVICE: ${{secrets.URL_SCHEDULER_SERVICE}}
 
       - name: Envia cobertura para o Codecov
