@@ -9,25 +9,25 @@ jest.mock('express-http-proxy', () => jest.fn((url, options) => {
 
 describe('API Gateway', () => {
     afterAll(() => {
-        gateway.close(); // Close the server after tests
+        gateway.close();
     });
 
     test('should proxy requests to /schedular', async () => {
         const res = await request(app).get('/schedular');
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_SCHEDULER_SERVICE) });
+        expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_SCHEDULER_SERVICE || 'https://2023-1-schedula-gerenciador-de-localidades.vercel.app') });
     });
 
     test('should proxy requests to /user', async () => {
         const res = await request(app).get('/user');
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_USER_SERVICE) });
+        expect(res.body).toEqual({ message: 'Proxied to ' + process.env.URL_USER_SERVICE });
     });
 
     test('should proxy requests to /printer', async () => {
         const res = await request(app).get('/printer');
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_PRINTER_SERVICE) });
+        expect(res.body).toEqual({ message: 'Proxied to ' + process.env.URL_PRINTER_SERVICE });
     });
 
     test('should proxy requests to /contract', async () => {
@@ -35,5 +35,4 @@ describe('API Gateway', () => {
         expect(res.statusCode).toEqual(200);
         expect(res.body).toEqual({ message: 'Proxied to ' + process.env.URL_CONTRACT_SERVICE });
     });
-
 });
