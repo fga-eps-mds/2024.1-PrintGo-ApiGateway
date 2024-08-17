@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Instala dependências
-        run: yarn
+        run: yarn install
 
       - name: Executa linter
         run: yarn lint
@@ -42,12 +42,3 @@ jobs:
           URL_USER_SERVICE: ${{secrets.URL_USER_SERVICE}}
           URL_PRINTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
           URL_SCHEDULER_SERVICE: ${{secrets.URL_SCHEDULER_SERVICE}}
-
-      - name: Envia cobertura para o Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-          flags: jest
-          name: 2023.2-PrintGo-ApiGateway
-          verbose: true
