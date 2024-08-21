@@ -17,6 +17,12 @@ describe('API Gateway', () => {
         expect(res.statusCode).toEqual(200);
         expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_SCHEDULER_SERVICE || 'https://2023-1-schedula-gerenciador-de-localidades.vercel.app') });
     });
+    
+    it('should return a message "Running Gateway"', async () => {
+        const response = await request(app).get('/');
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('message', 'Running Gateway');
+      });
 
     // test('should proxy requests to /user', async () => {
     //     const res = await request(app).get('/user');
