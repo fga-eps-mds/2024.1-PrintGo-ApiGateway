@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - master
+      - dev
   pull_request:
-    # types: [opened, synchronize, reopened]
     branches:
       - master
+      - dev
 
 jobs:
   sonarcloud:
@@ -19,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Instala dependências
-        run: yarn
+        run: yarn install
 
       - name: Executa linter
         run: yarn lint
@@ -28,7 +29,8 @@ jobs:
         run: yarn test:all
         env:
           URL_USER_SERVICE: ${{secrets.URL_USER_SERVICE}}
-          URL_PRNTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
+          URL_PRINTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
+          URL_CONTRACT_SERVICE: ${{secrets.URL_CONTRACT_SERVICE}}
           URL_SCHEDULER_SERVICE: ${{secrets.URL_SCHEDULER_SERVICE}}
 
       - name: Executa SonarCloud Scan
@@ -38,14 +40,5 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
           URL_USER_SERVICE: ${{secrets.URL_USER_SERVICE}}
-          URL_PRNTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
+          URL_PRINTER_SERVICE: ${{secrets.URL_PRINTER_SERVICE}}
           URL_SCHEDULER_SERVICE: ${{secrets.URL_SCHEDULER_SERVICE}}
-
-      - name: Envia cobertura para o Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-          flags: jest
-          name: 2023.2-PrintGo-ApiGateway
-          verbose: true
