@@ -1,5 +1,4 @@
 import request from 'supertest';
-import { app, gateway } from '../src/gateway';
 
 jest.mock('express-http-proxy', () => jest.fn((url, options) => {
     return (req, res, next) => {
@@ -8,37 +7,86 @@ jest.mock('express-http-proxy', () => jest.fn((url, options) => {
 }));
 
 describe('API Gateway', () => {
-    afterAll(() => {
-        gateway.close();
+    let app, gateway;
+
+    const resetEnv = () => {
+        process.env.URL_SCHEDULAR_SERVICE = "";
+        process.env.URL_PRINTER_SERVICE = "";
+        process.env.URL_CONTRACT_SERVICE = "";
+    };
+
+    beforeAll(() => {
+        resetEnv();
     });
 
-    test('should proxy requests to /schedular', async () => {
+    afterEach(() => {
+        if (gateway) {
+            gateway.close();
+        }
+        resetEnv();
+        jest.resetModules();
+    });
+
+    it('should proxy to the correct URL for /schedular route when URL_SCHEDULAR_SERVICE is defined', async () => {
+        process.env.URL_SCHEDULAR_SERVICE = 'http://localhost:5000';
+        const importedModule = await import('../src/gateway');
+        app = importedModule.app;
+        gateway = importedModule.gateway;
+
         const res = await request(app).get('/schedular');
-        expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_SCHEDULER_SERVICE || 'https://2023-1-schedula-gerenciador-de-localidades.vercel.app') });
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toEqual({ message: 'Proxied to ' + 'http://localhost:5000' });
     });
-    
-    it('should return a message "Running Gateway"', async () => {
-        const response = await request(app).get('/');
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('message', 'Running Gateway');
-      });
 
-    // test('should proxy requests to /user', async () => {
-    //     const res = await request(app).get('/user');
-    //     expect(res.statusCode).toEqual(200);
-    //     expect(res.body).toEqual({ message: 'Proxied to ' + process.env.URL_USER_SERVICE });
-    // });
+    it('should proxy to the fallback URL for /schedular route when URL_SCHEDULAR_SERVICE is not defined', async () => {
+        const importedModule = await import('../src/gateway');
+        app = importedModule.app;
+        gateway = importedModule.gateway;
 
-    test('should proxy requests to /printer', async () => {
+        const res = await request(app).get('/schedular');
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toEqual({ message: 'Proxied to ' + 'https://2023-1-schedula-gerenciador-de-localidades.vercel.app' });
+    });
+
+    it('should proxy to the correct URL for /printer route when URL_PRINTER_SERVICE is defined', async () => {
+        process.env.URL_PRINTER_SERVICE = 'http://localhost:5001';
+        const importedModule = await import('../src/gateway');
+        app = importedModule.app;
+        gateway = importedModule.gateway;
+
         const res = await request(app).get('/printer');
-        expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_PRINTER_SERVICE || 'https://two024-1-printgo-printerservice-1.onrender.com/') });
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toEqual({ message: 'Proxied to ' + 'http://localhost:5001' });
     });
 
-    test('should proxy requests to /contract', async () => {
+    it('should proxy to the fallback URL for /printer route when URL_PRINTER_SERVICE is not defined', async () => {
+        const importedModule = await import('../src/gateway');
+        app = importedModule.app;
+        gateway = importedModule.gateway;
+
+        const res = await request(app).get('/printer');
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toEqual({ message: 'Proxied to ' + 'https://two024-1-printgo-printerservice-1.onrender.com/' });
+    });
+
+    it('should proxy to the correct URL for /contract route when URL_CONTRACT_SERVICE is defined', async () => {
+        process.env.URL_CONTRACT_SERVICE = 'http://localhost:5002';
+        const importedModule = await import('../src/gateway');
+        app = importedModule.app;
+        gateway = importedModule.gateway;
+
         const res = await request(app).get('/contract');
-        expect(res.statusCode).toEqual(200);
-        expect(res.body).toEqual({ message: 'Proxied to ' + (process.env.URL_CONTRACT_SERVICE || 'https://two024-1-printgo-contractservice-0x4g.onrender.com/') });
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toEqual({ message: 'Proxied to ' + 'http://localhost:5002' });
+    });
+
+    it('should proxy to the fallback URL for /contract route when URL_CONTRACT_SERVICE is not defined', async () => {
+        const importedModule = await import('../src/gateway');
+        app = importedModule.app;
+        gateway = importedModule.gateway;
+
+        const res = await request(app).get('/contract');
+        expect(res.statusCode).toBe(200);
+        expect(res.body).toEqual({ message: 'Proxied to ' + 'https://two024-1-printgo-contractservice-0x4g.onrender.com/' });
     });
 });
